@@ -67,11 +67,15 @@ public class SampleHandViewer : MonoBehaviour
     }
     HandVisualizer m_LeftHandVisualizer;
     HandVisualizer m_RightHandVisualizer;
-    public IEnumerator Start()
+    public void Awake()
     {
         m_LeftHandVisualizer = new HandVisualizer(HandFlag.Left);
         m_RightHandVisualizer = new HandVisualizer(HandFlag.Right);
-        
+        StartCoroutine(UpdateHands());
+    }
+
+    IEnumerator UpdateHands()
+    {
         while (true)
         {
             m_LeftHandVisualizer.UpdatePositions();
