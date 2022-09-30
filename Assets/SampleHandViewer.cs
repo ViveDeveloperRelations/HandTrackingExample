@@ -23,16 +23,23 @@ public class SampleHandViewer : MonoBehaviour
             for (var i = 0; i < handJoints.Length; i++)
             {
                 var joint = handJoints[i];
-                
-                GameObject jointObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                jointObject.transform.parent = HandParent.transform;
-                jointObject.transform.position = joint.position;
-                jointObject.transform.localScale = Vector3.one * 0.01f;
-                Joints[i] = new VisualizedJoint()
+                try
                 {
-                    Joint = joint,
-                    JointObject = jointObject
-                };
+                    GameObject jointObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    jointObject.transform.parent = HandParent.transform;
+                    jointObject.transform.position = joint.position;
+                    jointObject.transform.localScale = Vector3.one * 0.01f;
+                    Joints[i] = new VisualizedJoint()
+                    {
+                        Joint = joint,
+                        JointObject = jointObject
+                    };
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError("Error initializing hands");
+                    Debug.LogException(e);
+                }
             }
         }
 
@@ -69,9 +76,17 @@ public class SampleHandViewer : MonoBehaviour
     HandVisualizer m_RightHandVisualizer;
     public void Awake()
     {
-        m_LeftHandVisualizer = new HandVisualizer(HandFlag.Left);
-        m_RightHandVisualizer = new HandVisualizer(HandFlag.Right);
-        StartCoroutine(UpdateHands());
+        try
+        {
+            m_LeftHandVisualizer = new HandVisualizer(HandFlag.Left);
+            m_RightHandVisualizer = new HandVisualizer(HandFlag.Right);
+            StartCoroutine(UpdateHands());
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error initializing hands");
+            Debug.LogException(e);
+        }
     }
 
     IEnumerator UpdateHands()
