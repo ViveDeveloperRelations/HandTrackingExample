@@ -79,6 +79,12 @@ public class SampleHandViewer : MonoBehaviour
             Debug.Log($"Waiting on XRGeneralSettings.Instance frame {Time.frameCount}");
             yield return null;
         }
+        Debug.Log($"XRGeneralSettings.Instance is initialized frame {Time.frameCount}");
+        for(int i= 0; i < 10; i++)
+        {
+            yield return null;
+        }
+
         m_LeftHandVisualizer = new HandVisualizer(HandFlag.Left);
         m_RightHandVisualizer = new HandVisualizer(HandFlag.Right);
         
