@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Management;
 using Wave.OpenXR.Toolkit;
 using Wave.OpenXR.Toolkit.Hand;
 
@@ -69,6 +70,15 @@ public class SampleHandViewer : MonoBehaviour
     HandVisualizer m_RightHandVisualizer;
     public IEnumerator Start()
     {
+        while(XRGeneralSettings.Instance == null || XRGeneralSettings.Instance.Manager == null)
+        {
+            yield return null;
+        }
+        while (!XRGeneralSettings.Instance.Manager.isInitializationComplete)
+        {
+            Debug.Log($"Waiting on XRGeneralSettings.Instance frame {Time.frameCount}");
+            yield return null;
+        }
         m_LeftHandVisualizer = new HandVisualizer(HandFlag.Left);
         m_RightHandVisualizer = new HandVisualizer(HandFlag.Right);
         
