@@ -80,7 +80,7 @@ public class SampleHandViewer : MonoBehaviour
             yield return null;
         }
         Debug.Log($"XRGeneralSettings.Instance is initialized frame {Time.frameCount}");
-        for(int i= 0; i < 10; i++)
+        for(int i= 0; i < 100; i++)
         {
             yield return null;
         }
